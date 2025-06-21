@@ -1,0 +1,17 @@
+[project]
+name = "qualivec"
+version = "0.1.0"
+description = "A Python library for scalable qualitative content analysis using LLM embeddings and semantic vector-based classification."
+readme = "README.md"
+authors = [
+    { name = "Akhil Vaidya", email = "akhilvaidya2004@gmail.com" }
+]
+requires-python = "==3.12.10"
+dependencies = []
+
+[project.scripts]
+qualivec = "qualivec:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

@@ -89,7 +89,7 @@ results_df = classifier.classify(
 print(results_df["predicted_class"].value_counts())
 ```
 
-![QualiVec Classification Results](assets\distributions.png)
+![QualiVec Classification Results](assets/distributions.png)
 
 ## 🧩 Core Concepts
 
@@ -276,7 +276,7 @@ evaluator.plot_confusion_matrix(
 evaluator.plot_bootstrap_distributions(bootstrap_results)
 ```
 
-![QualiVec Confusion Matrix](assets\confusion_matrix.png)
+![QualiVec Confusion Matrix](assets/confusion_matrix.png)
 
 ### Threshold Optimization
 

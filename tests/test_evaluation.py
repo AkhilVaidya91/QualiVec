@@ -61,7 +61,7 @@ def test_basic_evaluation():
     )
     
     # Create evaluator
-    evaluator = Evaluator(verbose=True)
+    evaluator = Evaluator(verbose=False)
     
     # Run evaluation
     results = evaluator.evaluate(
@@ -98,7 +98,7 @@ def test_bootstrap_evaluation():
     )
     
     # Create evaluator
-    evaluator = Evaluator(verbose=True)
+    evaluator = Evaluator(verbose=False)
     
     # Run bootstrap evaluation with fewer iterations for test
     bootstrap_results = evaluator.bootstrap_evaluate(

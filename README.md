@@ -52,7 +52,7 @@ pip install qualivec
 For development installation:
 
 ```bash
-git clone https://github.com/yourusername/qualivec.git
+git clone https://github.com/AkhilVaidya91/QualiVec.git
 cd qualivec
 pip install -e .
 ```
@@ -88,6 +88,8 @@ results_df = classifier.classify(
 # Display distribution of classifications
 print(results_df["predicted_class"].value_counts())
 ```
+
+![QualiVec Classification Results](assets\distributions.png)
 
 ## 🧩 Core Concepts
 
@@ -273,6 +275,8 @@ evaluator.plot_confusion_matrix(
 # Plot bootstrap distributions
 evaluator.plot_bootstrap_distributions(bootstrap_results)
 ```
+
+![QualiVec Confusion Matrix](assets\confusion_matrix.png)
 
 ### Threshold Optimization
 

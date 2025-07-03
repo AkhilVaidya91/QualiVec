@@ -2,36 +2,6 @@
 
 **QualiVec** is a Python library for scalable qualitative content analysis powered by Large Language Model (LLM) embeddings. It enables systematic semantic similarity assessment, reference vector construction, and automated classification across diverse textual domains using a hybrid of deductive and inductive coding approaches.
 
-## 📋 Table of Contents
-
-- [Overview](#overview)
-- [Installation](#installation)
-- [Interactive Demo](#interactive-demo)
-  - [Features](#demo-features)
-  - [Getting Started](#getting-started-with-demo)
-  - [Demo Walkthrough](#demo-walkthrough)
-  - [Data Format Requirements](#data-format-requirements)
-- [Quick Start](#quick-start)
-- [Core Concepts](#core-concepts)
-- [Components](#components)
-  - [Data Loading and Preparation](#data-loading-and-preparation)
-  - [Embedding Generation](#embedding-generation)
-  - [Semantic Matching](#semantic-matching)
-  - [Classification](#classification)
-  - [Evaluation](#evaluation)
-  - [Threshold Optimization](#threshold-optimization)
-  - [Sampling](#sampling)
-- [Usage Examples](#usage-examples)
-  - [Preparing Reference Vectors](#preparing-reference-vectors)
-  - [Classifying New Data](#classifying-new-data)
-  - [Evaluating Classification Performance](#evaluating-classification-performance)
-  - [Optimizing Similarity Thresholds](#optimizing-similarity-thresholds)
-  - [Sampling for Manual Coding](#sampling-for-manual-coding)
-- [API Reference](#api-reference)
-- [Best Practices](#best-practices)
-- [Troubleshooting](#troubleshooting)
-- [License](#license)
-
 ## 🔍 Overview
 
 QualiVec bridges qualitative content analysis with machine learning by leveraging the semantic understanding capabilities of Large Language Models. Instead of relying on simple keyword matching or manually coding large datasets, QualiVec uses embedding vectors to capture semantic meaning and perform classification based on similarity to reference vectors.

@@ -66,7 +66,6 @@ pip install -e .
 
 QualiVec includes a comprehensive Streamlit web application that provides an interactive demonstration of the library's capabilities. The demo allows users to upload their own data and experience the full workflow of qualitative content analysis using LLM embeddings.
 
-![QualiVec Demo Home Page](assets/screenshots/demo-home.png)
 
 ### Demo Features
 
@@ -124,12 +123,12 @@ Your reference data should contain:
 - `sentence`: The example text for that category
 
 Example:
-```csv
-tag,sentence
-Positive,This is absolutely fantastic!
-Negative,This is terrible and disappointing
-Neutral,This is okay I guess
-```
+
+| tag      | sentence                        |
+|----------|---------------------------------|
+| Positive | This is absolutely fantastic!   |
+| Negative | This is terrible and disappointing |
+| Neutral  | This is okay I guess            |
 
 #### Labeled Data (CSV)
 Your labeled data should contain:
@@ -137,26 +136,15 @@ Your labeled data should contain:
 - `Label`: The true class/category (for evaluation)
 
 Example:
-```csv
-sentence,Label
-I love this product so much!,Positive
-Not very good quality,Negative
-Average product nothing special,Neutral
-```
 
-### Demo Tips for Best Results
+| sentence                          | Label    |
+|------------------------------------|----------|
+| I love this product so much!       | Positive |
+| Not very good quality              | Negative |
+| Average product nothing special    | Neutral  |
 
-- **Quality Reference Data**: Provide diverse, high-quality examples for each category
-- **Balanced Data**: Try to have roughly equal numbers of examples per category
-- **Clear Categories**: Make sure your categories are distinct and well-defined
-- **Text Length**: Works best with sentences or short paragraphs
-- **Language**: Currently optimized for English text
-
-![Demo Performance Metrics](assets/screenshots/demo-metrics.png)
 
 ## 🚀 Quick Start
-
-> **🎮 New to QualiVec?** Try our [Interactive Demo](#interactive-demo) for a guided, no-code experience!
 
 Here's a simple example to classify text data using reference vectors:
 
@@ -191,21 +179,13 @@ print(results_df["predicted_class"].value_counts())
 ![QualiVec Classification Results](assets/distributions.png)
 
 ## 🧩 Core Concepts
-
-### Reference Vectors
-Reference vectors are the semantic anchors that define each class or category. They are typically curated examples of text that represent a class well.
-
-### Similarity Threshold
-The threshold determines how similar a text must be to a reference vector to be classified as that class. Higher thresholds are more restrictive.
-
-### Embedding
-Embeddings are numerical vector representations of text that capture semantic meaning. Similar texts have similar embeddings.
-
-### Semantic Matching
-QualiVec uses cosine similarity between embeddings to determine how similar texts are to reference vectors.
-
-### Bootstrap Evaluation
-A statistical method for estimating uncertainty in evaluation metrics by resampling with replacement.
+| Concept              | Description                                                                                      |
+|----------------------|--------------------------------------------------------------------------------------------------|
+| **Reference Vectors**| Semantic anchors that define each class or category, curated as representative example texts.    |
+| **Similarity Threshold** | Determines how similar a text must be to a reference vector to be classified as that class; higher values are more restrictive. |
+| **Embedding**        | Numerical vector representations of text that capture semantic meaning; similar texts have similar embeddings. |
+| **Semantic Matching**| Uses cosine similarity between embeddings to assess how close texts are to reference vectors.     |
+| **Bootstrap Evaluation** | Statistical method for estimating uncertainty in evaluation metrics by resampling with replacement. |
 
 ## 🧰 Components
 

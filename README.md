@@ -6,6 +6,11 @@
 
 - [Overview](#overview)
 - [Installation](#installation)
+- [Interactive Demo](#interactive-demo)
+  - [Features](#demo-features)
+  - [Getting Started](#getting-started-with-demo)
+  - [Demo Walkthrough](#demo-walkthrough)
+  - [Data Format Requirements](#data-format-requirements)
 - [Quick Start](#quick-start)
 - [Core Concepts](#core-concepts)
 - [Components](#components)
@@ -57,7 +62,101 @@ cd qualivec
 pip install -e .
 ```
 
+## 🖥️ Interactive Demo
+
+QualiVec includes a comprehensive Streamlit web application that provides an interactive demonstration of the library's capabilities. The demo allows users to upload their own data and experience the full workflow of qualitative content analysis using LLM embeddings.
+
+![QualiVec Demo Home Page](assets/screenshots/demo-home.png)
+
+### Demo Features
+
+- **Interactive Data Upload**: Upload your own CSV files for reference and labeled data
+- **Model Configuration**: Choose from different pre-trained embedding models
+- **Threshold Optimization**: Automatically find the optimal similarity threshold
+- **Real-time Classification**: See classification results as they happen
+- **Comprehensive Evaluation**: View detailed performance metrics and visualizations
+- **Bootstrap Analysis**: Get confidence intervals for robust evaluation
+- **Download Results**: Export classification results and metrics
+
+### Getting Started with Demo
+
+1. **Install Dependencies**:
+   ```bash
+   pip install -e .
+   ```
+
+2. **Run the Demo**:
+   ```bash
+   cd app
+   uv run run_demo.py
+   ```
+
+3. **Access the Demo**:
+   Open your browser and navigate to `http://localhost:8501`
+
+### Demo Walkthrough
+
+#### 1. Data Upload Page
+Upload your reference and labeled data files. The demo validates file formats and shows data statistics.
+
+![Data Upload Interface](assets/data_upload.png)
+
+#### 2. Configuration Page
+Configure embedding models and optimization parameters. Choose from multiple pre-trained models and set classification thresholds.
+
+![Configuration Interface](assets/config.png)
+
+#### 3. Classification Page
+Run the classification process with real-time progress updates. View optimization results and threshold analysis.
+
+![Classification Process](assets/optim.png)
+
+#### 4. Results Page
+Examine detailed evaluation metrics, confusion matrices, bootstrap confidence intervals, and sample predictions.
+
+![Results Dashboard](assets/bootstrap.png)
+
+### Data Format Requirements
+
+#### Reference Data (CSV)
+Your reference data should contain:
+- `tag`: The class/category label
+- `sentence`: The example text for that category
+
+Example:
+```csv
+tag,sentence
+Positive,This is absolutely fantastic!
+Negative,This is terrible and disappointing
+Neutral,This is okay I guess
+```
+
+#### Labeled Data (CSV)
+Your labeled data should contain:
+- `sentence`: The text to be classified
+- `Label`: The true class/category (for evaluation)
+
+Example:
+```csv
+sentence,Label
+I love this product so much!,Positive
+Not very good quality,Negative
+Average product nothing special,Neutral
+```
+
+### Demo Tips for Best Results
+
+- **Quality Reference Data**: Provide diverse, high-quality examples for each category
+- **Balanced Data**: Try to have roughly equal numbers of examples per category
+- **Clear Categories**: Make sure your categories are distinct and well-defined
+- **Text Length**: Works best with sentences or short paragraphs
+- **Language**: Currently optimized for English text
+
+![Demo Performance Metrics](assets/screenshots/demo-metrics.png)
+
 ## 🚀 Quick Start
+
+> **🎮 New to QualiVec?** Try our [Interactive Demo](#interactive-demo) for a guided, no-code experience!
 
 Here's a simple example to classify text data using reference vectors:
 

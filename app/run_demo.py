@@ -24,6 +24,8 @@ def main():
         subprocess.run([
             sys.executable, "-m", "streamlit", "run", app_path,
             "--server.headless", "true",
+            # "--server.address=0.0.0.0",
+            "--server.port=8501",
             "--server.enableCORS", "false",
             "--server.enableXsrfProtection", "false"
         ])

@@ -13,6 +13,8 @@ This Streamlit application provides an interactive demonstration of the QualiVec
 
 ## How to Run
 
+### Option 1: Local Installation
+
 1. **Install Dependencies**:
    ```bash
    pip install -e .
@@ -26,6 +28,23 @@ This Streamlit application provides an interactive demonstration of the QualiVec
 
 3. **Access the App**:
    Open your browser and navigate to `http://localhost:8501`
+
+### Option 2: Docker
+
+1. **Build the Docker Image**:
+   ```bash
+   docker build -t qualivec .
+   ```
+
+2. **Run the Docker Container**:
+   ```bash
+   docker run --rm -p 8501:8501 qualivec
+   ```
+
+3. **Access the App**:
+   Open your browser and navigate to `http://localhost:8501`
+
+> **Note**: The Docker option provides a containerized environment with all dependencies pre-installed, making it easier to run the application without setting up a local Python environment.
 
 ## Data Format Requirements
 

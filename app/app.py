@@ -520,72 +520,72 @@ def show_classification_page():
                         optimal_threshold = st.session_state.config['initial_threshold']
                         progress_bar.progress(20)
                         status_text.info(f"Using initial threshold: {optimal_threshold:.4f}")
-					
-					# Run evaluation
-					status_text.info("Generating embeddings...")
-					progress_bar.progress(50)
-					
-					embedding_model = st.session_state.classifier.embedding_model
-					data_loader = DataLoader(verbose=False)
-					full_df = data_loader.load_labeled_data(tmp_labeled_path, label_column='label')
-					
-					# Generate embeddings
-					full_embeddings = embedding_model.embed_dataframe(full_df, text_column='sentence')
-					
-					progress_bar.progress(70)
-					status_text.info("Classifying with semantic matcher...")
-					
-					# Classify
-					match_results = st.session_state.classifier.matcher.match(
-						full_embeddings, 
-						st.session_state.reference_vectors
-					)
-					predicted_labels = match_results["predicted_class"].tolist()
-					true_labels = full_df['label'].tolist()
-					
-					progress_bar.progress(80)
-					status_text.info("Evaluating predicted labels...")
-					
-					# Evaluate
-					evaluator = Evaluator(verbose=False)
-					eval_results = evaluator.evaluate(
-						true_labels=true_labels,
-						predicted_labels=predicted_labels,
-						class_names=list(set(true_labels) | set(predicted_labels))
-					)
-					
-					progress_bar.progress(90)
-					status_text.info("Running bootstrap evaluation...")
-					
-					# Bootstrap evaluation
-					bootstrap_results = evaluator.bootstrap_evaluate(
-						true_labels=true_labels,
-						predicted_labels=predicted_labels,
-						n_iterations=100
-					)
-					
-					progress_bar.progress(98)
-					
-					st.session_state.evaluation_results = eval_results
-					st.session_state.bootstrap_results = bootstrap_results
-					st.session_state.predictions = {
-						'true_labels': true_labels,
-						'predicted_labels': predicted_labels,
-						'match_results': match_results,
-						'full_df': full_df
-					}
-					
-				finally:
-					# Ensure temporary file is deleted
-					try:
-						os.unlink(tmp_labeled_path)
-					except (OSError, PermissionError):
-						pass  # File might already be deleted or locked
-					
-					progress_bar.progress(100)
-					status_text.success("Classification completed successfully!")
-					st.success("✅ Classification completed successfully!")
-					
+                    
+                    # Run evaluation
+                    status_text.info("Generating embeddings...")
+                    progress_bar.progress(50)
+                    
+                    embedding_model = st.session_state.classifier.embedding_model
+                    data_loader = DataLoader(verbose=False)
+                    full_df = data_loader.load_labeled_data(tmp_labeled_path, label_column='label')
+                    
+                    # Generate embeddings
+                    full_embeddings = embedding_model.embed_dataframe(full_df, text_column='sentence')
+                    
+                    progress_bar.progress(70)
+                    status_text.info("Classifying with semantic matcher...")
+                    
+                    # Classify
+                    match_results = st.session_state.classifier.matcher.match(
+                        full_embeddings, 
+                        st.session_state.reference_vectors
+                    )
+                    predicted_labels = match_results["predicted_class"].tolist()
+                    true_labels = full_df['label'].tolist()
+                    
+                    progress_bar.progress(80)
+                    status_text.info("Evaluating predicted labels...")
+                    
+                    # Evaluate
+                    evaluator = Evaluator(verbose=False)
+                    eval_results = evaluator.evaluate(
+                        true_labels=true_labels,
+                        predicted_labels=predicted_labels,
+                        class_names=list(set(true_labels) | set(predicted_labels))
+                    )
+                    
+                    progress_bar.progress(90)
+                    status_text.info("Running bootstrap evaluation...")
+                    
+                    # Bootstrap evaluation
+                    bootstrap_results = evaluator.bootstrap_evaluate(
+                        true_labels=true_labels,
+                        predicted_labels=predicted_labels,
+                        n_iterations=100
+                    )
+                    
+                    progress_bar.progress(98)
+                    
+                    st.session_state.evaluation_results = eval_results
+                    st.session_state.bootstrap_results = bootstrap_results
+                    st.session_state.predictions = {
+                        'true_labels': true_labels,
+                        'predicted_labels': predicted_labels,
+                        'match_results': match_results,
+                        'full_df': full_df
+                    }
+                    
+                finally:
+                    # Ensure temporary file is deleted
+                    try:
+                        os.unlink(tmp_labeled_path)
+                    except (OSError, PermissionError):
+                        pass  # File might already be deleted or locked
+                    
+                    progress_bar.progress(100)
+                    status_text.success("Classification completed successfully!")
+                    st.success("✅ Classification completed successfully!")
+                    
             except Exception as e:
                 progress_bar.empty()
                 status_text.error(f"Error during classification: {str(e)}")

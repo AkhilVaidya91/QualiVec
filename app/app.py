@@ -14,12 +14,12 @@ from plotly.subplots import make_subplots
 # Add the parent directory to sys.path to import the module
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from src.qualivec.data import DataLoader
-from src.qualivec.embedding import EmbeddingModel
-from src.qualivec.matching import SemanticMatcher
-from src.qualivec.classification import Classifier
-from src.qualivec.evaluation import Evaluator
-from src.qualivec.optimization import ThresholdOptimizer
+from qualivec.data import DataLoader
+from qualivec.embedding import EmbeddingModel
+from qualivec.matching import SemanticMatcher
+from qualivec.classification import Classifier
+from qualivec.evaluation import Evaluator
+from qualivec.optimization import ThresholdOptimizer
 
 # Set page config
 st.set_page_config(
@@ -281,17 +281,58 @@ def show_configuration_page():
     with col1:
         st.markdown("### Embedding Model")
         
-        model_options = [
-            "sentence-transformers/all-MiniLM-L6-v2",
-            "sentence-transformers/all-mpnet-base-v2",
-            "sentence-transformers/distilbert-base-nli-mean-tokens"
-        ]
-        
-        selected_model = st.selectbox(
-            "Choose embedding model",
-            model_options,
-            help="Select the pre-trained model for generating embeddings"
+        # Model type selection
+        model_type = st.selectbox(
+            "Choose model type",
+            ["HuggingFace", "Gemini"],
+            help="Select the type of embedding model to use"
         )
+        
+        # Model selection based on type
+        if model_type == "HuggingFace":
+            model_options = [
+                "sentence-transformers/all-MiniLM-L6-v2",
+                "sentence-transformers/all-mpnet-base-v2",
+                "sentence-transformers/distilbert-base-nli-mean-tokens"
+            ]
+            
+            selected_model = st.selectbox(
+                "Choose HuggingFace model",
+                model_options,
+                help="Select the pre-trained HuggingFace model for generating embeddings"
+            )
+        else:  # Gemini
+            gemini_models = [
+                "gemini-embedding-001",
+                "text-embedding-004"
+            ]
+            
+            selected_model = st.selectbox(
+                "Choose Gemini model",
+                gemini_models,
+                help="Select the Gemini embedding model for generating embeddings"
+            )
+            
+            # Calculate total texts to process
+            total_texts = 0
+            if st.session_state.reference_data is not None:
+                total_texts += len(st.session_state.reference_data)
+            if st.session_state.labeled_data is not None:
+                total_texts += len(st.session_state.labeled_data)
+            
+            st.warning(
+                f"⚠️ **Gemini API Rate Limits (Free Tier)**\\n\\n"
+                f"- 1,500 requests per day\\n"
+                f"- Each batch of 100 texts = 1 request\\n"
+                f"- Your current dataset: ~{total_texts} texts\\n"
+                f"- Estimated requests needed: ~{(total_texts // 100) + 1}\\n\\n"
+                f"If you exceed quota, consider:\\n"
+                f"1. Using a smaller dataset\\n"
+                f"2. Switching to HuggingFace models (no limits)\\n"
+                f"3. Upgrading to a paid API plan"
+            )
+            
+            st.info("💡 Note: Using Gemini embeddings requires GOOGLE_API_KEY environment variable to be set.")
         
         st.markdown("### Initial Threshold")
         initial_threshold = st.slider(
@@ -352,8 +393,13 @@ def show_configuration_page():
             try:
                 # Initialize classifier
                 classifier = Classifier(verbose=False)
+                
+                # Determine model type parameter
+                model_type_param = "gemini" if model_type == "Gemini" else "huggingface"
+                
                 classifier.load_models(
                     model_name=selected_model,
+                    model_type=model_type_param,
                     threshold=initial_threshold
                 )
                 
@@ -378,6 +424,7 @@ def show_configuration_page():
                 st.session_state.classifier = classifier
                 st.session_state.reference_vectors = reference_data
                 st.session_state.config = {
+                    'model_type': model_type,
                     'model_name': selected_model,
                     'initial_threshold': initial_threshold,
                     'optimize_threshold': optimize_threshold,
@@ -402,6 +449,7 @@ def show_configuration_page():
         
         with col1:
             st.markdown("**Model Settings:**")
+            st.write(f"- Model type: {config['model_type']}")
             st.write(f"- Model: {config['model_name']}")
             st.write(f"- Initial threshold: {config['initial_threshold']}")
         

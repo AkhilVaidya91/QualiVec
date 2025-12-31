@@ -30,17 +30,23 @@ class Classifier:
     
     def load_models(self, 
                    model_name: str = "sentence-transformers/all-MiniLM-L6-v2",
+                   model_type: str = "huggingface",
                    threshold: float = 0.7):
         """Load embedding model and matcher.
         
         Args:
-            model_name: Name of the HuggingFace model to use.
+            model_name: Name of the model to use (HuggingFace or Gemini).
+            model_type: Type of model ('huggingface' or 'gemini').
             threshold: Cosine similarity threshold for matching.
         """
         if self.verbose:
-            print(f"Loading embedding model: {model_name}")
+            print(f"Loading {model_type} embedding model: {model_name}")
         
-        self.embedding_model = EmbeddingModel(model_name=model_name, verbose=self.verbose)
+        self.embedding_model = EmbeddingModel(
+            model_name=model_name, 
+            model_type=model_type,
+            verbose=self.verbose
+        )
         self.matcher = SemanticMatcher(threshold=threshold, verbose=self.verbose)
         
         if self.verbose:
